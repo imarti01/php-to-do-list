@@ -13,13 +13,33 @@
         <h1>To-Do List</h1>
     </header>
 
+    <?php
+    if (isset($_GET['error'])) {
+        echo "<div><h3>Passwords don't match</h3></div>";
+    }
+    ?>
+
     <h2>Register</h2>
-    <form action="login.php">
-        <input type="text" name="username">
-        <input type="password" name="password">
+    <form action="./modules/register.php" method="post">
+        <label>
+            Email:
+            <input type="email" name="email">
+        </label>
+        <label>
+            Username:
+            <input type="text" name="username">
+        </label>
+        <label>
+            Password:
+            <input type="password" name="password">
+        </label>
+        <label>
+            Confirm Password:
+            <input type="password" name="confirmPassword">
+        </label>
         <button>Submit</button>
     </form>
-    <p>LoginPage</p>
+    <p><a href="loginPage.php">LoginPage</a></p>
 
 </body>
 

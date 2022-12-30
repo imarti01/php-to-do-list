@@ -13,13 +13,25 @@
         <h1>To-Do List</h1>
     </header>
 
+    <?php
+    if (isset($_GET['error'])) {
+        $errorMessage = $_GET['error'];
+
+        if ($errorMessage === "alreadyRegistered") {
+            echo "<div><h3>A user already exists with this email</h3></div>";
+        } elseif ($errorMessage === "incorrectEmailOrPassword") {
+            echo "<div><h3>Verify that your e-mail & the password are valid</h3></div>";
+        }
+    }
+    ?>
+
     <h2>Login</h2>
-    <form action="login.php">
-        <input type="text" name="username">
+    <form action="./modules/login.php" method="post">
+        <input type="email" name="email">
         <input type="password" name="password">
         <button>Submit</button>
     </form>
-    <p>registerPage</p>
+    <p><a href="registerPage.php">registerPage</a></p>
 
 </body>
 

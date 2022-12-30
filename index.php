@@ -12,6 +12,7 @@
 <body>
     <header>
         <h1>To-Do List</h1>
+        <h2><a href="./modules/logout.php">Logout</a></h2>
     </header>
     <main>
 
@@ -22,19 +23,12 @@
         <div>
             <?php
             session_start();
-
-            if (isset($_SESSION['tasksArr'])) {
-                $tasks = $_SESSION['tasksArr'];
-
-                foreach ($tasks as $idx => $task) {
-                    echo "<form action='modules/deleteTask.php'>";
-                    echo "<p>$task</p>";
-                    echo "<input type='hidden' name=$idx value=$task>";
-                    echo "<button type=submit>Delete</button>";
-                    echo "</form>";
-                }
+            if (isset($_SESSION['currentUser'])) {
+                require_once("modules/sessionControl.php");
+                showTasks();
+            } else {
+                header("Location: loginPage.php");
             }
-
             ?>
         </div>
 
