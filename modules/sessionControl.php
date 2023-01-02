@@ -11,6 +11,8 @@ function userRegister()
     $data = file_get_contents("users.json");
     $users = json_decode($data, true);
 
+    session_start();
+
     if ($_REQUEST['password'] !== $_REQUEST['confirmPassword']) {
         header("Location: ../registerPage.php?error=incorrectPassword");
     } else {
@@ -21,14 +23,15 @@ function userRegister()
                 }
             }
         }
-        if ($newUser->isRegistered) {
+        if (isset($newUser->isRegistered)) {
             header("Location: ../loginPage.php?error=alreadyRegistered");
         } else {
             array_push($users, $newUser);
+            $_SESSION['currentUser'] = count($users) - 1;
             $newArrUsers = json_encode($users);
             $fileUsers = 'users.json';
             file_put_contents($fileUsers, $newArrUsers);
-            header("Location:../loginPage.php?Message=registerOk");
+            header("Location: ../index.php");
         }
     }
 }
@@ -63,10 +66,11 @@ function showTasks()
         $tasks = $users[$currentUser]['tasksArr'];
 
         foreach ($tasks as $idx => $task) {
-            echo "<form action='modules/deleteTask.php'>";
+            echo "<form action='modules/deleteTask.php' class='container-each-todo'>";
             echo "<p>$task</p>";
+            echo "<button type=submit>	
+            🗙</button>";
             echo "<input type='hidden' name=$idx value=$task>";
-            echo "<button type=submit>Delete</button>";
             echo "</form>";
         }
     }
